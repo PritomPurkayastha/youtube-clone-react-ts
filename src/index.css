@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-sm;
+}
+
+::-webkit-scrollbar {
+    @apply bg-transparent w-2;
+}
+
+.scrollbar-hidden::-webkit-scrollbar-thumb {
+    @apply bg-transparent;
+}
+
+.scrollbar-hidden:hover::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 w-[10px];
+}

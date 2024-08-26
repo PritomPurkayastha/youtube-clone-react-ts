@@ -1,5 +1,6 @@
 import {
   BookCheck,
+  BookCopy,
   CirclePlay,
   Clapperboard,
   Clock5,
@@ -7,6 +8,7 @@ import {
   Gamepad2,
   History,
   Home,
+  HomeIcon,
   Library,
   Lightbulb,
   Link,
@@ -25,153 +27,35 @@ import {
   Youtube,
 } from "lucide-react";
 import React, { ElementType } from "react";
+import FullSidebar from "./FullSidebar";
+import CollapsedSidebar from "./CollapsedSidebar";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
-const Sidebar = ({className}: any) => {
-  type entries = {
-    icon: ElementType,
-    text: string
-  }
-  type sideBarType = {
-    category: string | null
-    entries: entries[]
-  }
-  const sideBar: sideBarType[] = [
-    {
-      category: null,
-      entries: [
-        {
-          icon: Home,
-          text: "Home",
-        },
-        {
-          icon: Link,
-          text: "Shorts",
-        },
-        {
-          icon: Library,
-          text: "Subscription",
-        },
-      ],
-    },
-    {
-      category: "You",
-      entries: [
-        {
-          icon: UserPen,
-          text: "Your Channel",
-        },
-        {
-          icon: History,
-          text: "History",
-        },
-        {
-          icon: ListVideo,
-          text: "Playlists",
-        },
-        {
-          icon: MonitorPlay,
-          text: "Your Videos",
-        },
-        {
-          icon: Clock5,
-          text: "Watch Later",
-        },
-        {
-          icon: ThumbsUp,
-          text: "Liked Videos",
-        },
-      ],
-    },
-    {
-      category: "Explore",
-      entries: [
-        {
-          icon: Flame,
-          text: "Trending",
-        },
-        {
-          icon: ShoppingBag,
-          text: "Shopping",
-        },
-        {
-          icon: Music2,
-          text: "Music",
-        },
-        {
-          icon: Clapperboard,
-          text: "Films",
-        },
-        {
-          icon: Radio,
-          text: "Live",
-        },
-        {
-          icon: Gamepad2,
-          text: "Games",
-        },
-        {
-          icon: Newspaper,
-          text: "News",
-        },
-        {
-          icon: Trophy,
-          text: "Sport",
-        },
-        {
-          icon: Lightbulb,
-          text: "Courses",
-        },
-        {
-          icon: Shirt,
-          text: "Fashion & beauty",
-        },
-        {
-          icon: RadioTower,
-          text: "Podcasts",
-        },
-      ],
-    },
-    {
-      category: "More From Youtube",
-      entries: [
-        {
-          icon: Youtube,
-          text: "Youtube",
-        },
-        {
-          icon: BookCheck,
-          text: "Youtube Studio",
-        },
-        {
-          icon: CirclePlay,
-          text: "Youtube Music",
-        },
-        {
-          icon: Youtube,
-          text: "Youtube Kids",
-        },
-      ],
-    },
-  ];
+const Sidebar = () => {
+  const showSidebar = useSelector(
+    (state: RootState) => state.category.showSidebar
+  );
   return (
-    <aside className="flex flex-col items-start overflow-y-auto scrollbar-hidden w-30 relative z-10">
-      {
-        sideBar.map((category: sideBarType) => (
-          <div className={`flex flex-col items-start overflow-y-auto scrollbar-hidden w-30 relative ${className}`}>
-            {category.category &&
-              <span className="font-sans text-xl text-white w-full border-t border-t-orange-500 py-4 mt-4">{ category.category }</span>
-            }
-            {
-              category.entries.map((item: entries) => (
-                <div className="flex items-center py-2">
-                  <item.icon/>
-                  <span className="pl-2 text-sm font-sans font-normal">{item.text}</span>
-                </div>
-              ))
-            }
+    <aside className="overflow-y-auto scrollbar-hidden relative">
+      <div className="hidden lg:flex">
+        {showSidebar ? <FullSidebar /> : <CollapsedSidebar />}
+      </div>
+      <div className="flex flex-col lg:hidden">
+        {showSidebar === true ? "abc" : 'cba'}
+        {showSidebar ?
+          <div className="hidden md:flex">
+            <CollapsedSidebar />
           </div>
-        ))
-      }
+        : 
+          <div
+            className="fixed inset-y-0 left-0 top-16 transform translate-x-0 md:translate-x-0 transition-transform duration-800 ease-in-out z-40 bg-[#0f0f0f] pl-4 overflow-y-auto"
+          >
+            hjasebfjsehbf
+            <FullSidebar />
+          </div>
+        }
+      </div>
     </aside>
   );
 };

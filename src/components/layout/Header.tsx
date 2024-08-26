@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import logo from "../../assets/YouTube-Logo.wine.svg";
 import { ArrowLeft, Bell, Menu, Mic, Search, Upload, User } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import { toggleSidebar } from "../../store/slices/homeSlice";
 
 const Header = () => {
   const [showSearchBar, setShowSearchBar] = useState(false);
-  //https://chatgpt.com/c/37c641de-c3ea-4a68-9577-48716d368bcd
+  const dispatch = useDispatch<AppDispatch>();
+  const showSidebar =  useSelector(
+    (state: RootState) => state.category.showSidebar
+  );
   return (
     <div>
       <div className="hidden sm:flex justify-between content-center gap-10 lg:gap-20">
         <div className="flex items-center justify-center flex-shrink-0">
-          <button className="p-2 hover:bg-slate-800 rounded-full w-10 h-10 flex content-center transition-colors">
+          <button className="p-2 hover:bg-slate-800 rounded-full w-10 h-10 flex content-center transition-colors" onClick={() => dispatch(toggleSidebar(!showSidebar))}>
             <Menu />
           </button>
           <img src={logo} className="h-16 flex-shrink-0" />
@@ -50,9 +56,9 @@ const Header = () => {
           </button>
         </div>
       </div>
-      <div className="sm:hidden flex justify-between content-center px-4 py-1 gap-10 lg:gap-20">
+      <div className="sm:hidden flex justify-between content-center gap-10 lg:gap-20">
         <div className={`items-center justify-center flex-shrink-0 ${showSearchBar ? 'hidden' : 'flex'}`}>
-          <button className="p-2 hover:bg-slate-800 rounded-full w-10 h-10 flex content-center transition-colors">
+          <button className="p-2 hover:bg-slate-800 rounded-full w-10 h-10 flex content-center transition-colors" onClick={() => dispatch(toggleSidebar(!showSidebar))}>
             <Menu />
           </button>
           <img src={logo} className="h-16 flex-shrink-0" />

@@ -7,7 +7,8 @@ interface CategoryType {
 }
 const initialState: any = {
   categoryList: [],
-  selectedCategoryId: '0'
+  selectedCategoryId: '0',
+  showSidebar: true
 };
 
 export const fetchCategoryList = createAsyncThunk(
@@ -33,6 +34,10 @@ const categorySlice = createSlice({
   reducers: {
     updateSelcetedCategory: (state, action) => {
       state.selectedCategoryId = action.payload;
+    },
+    toggleSidebar: (state, action) => {
+      debugger;
+      state.showSidebar = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -62,6 +67,6 @@ const categorySlice = createSlice({
   },
 });
 
-export const {updateSelcetedCategory} = categorySlice.actions;
+export const {updateSelcetedCategory, toggleSidebar} = categorySlice.actions;
 export const categoryReducer = categorySlice.reducer;
 export type { CategoryType };

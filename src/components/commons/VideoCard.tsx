@@ -3,14 +3,17 @@ import { YouTubeVideo } from '../../store/slices/videoSlice';
 import avatar from "../../assets/avatar-default-symbolic-svgrepo-com.svg";
 import { Dot, Verified } from 'lucide-react';
 import { formatDate, formatNumber } from '../../utils/helper';
+import { useNavigate } from 'react-router-dom';
 
 type VideoCardType = {
   video: YouTubeVideo;
 }
 
 const VideoCard = ({video}: VideoCardType) => {
+  const navigate = useNavigate();
   const handleVideoPlay = () => {
-    console.log('clicked on card');
+    navigate(`/watch?v=${video.id}`);
+    sessionStorage.setItem('video', JSON.stringify(video));
   }
 
   const viewChannel = (event: React.MouseEvent<HTMLSpanElement>) => {
@@ -20,7 +23,7 @@ const VideoCard = ({video}: VideoCardType) => {
 
   return (
     <div className="shadow-sm h-[max-content] w-[100%] flex flex-col cursor-pointer" onClick={handleVideoPlay}>
-      <img src={video.snippet.thumbnails.medium.url} className='rounded-sm' />
+      <img src={video.snippet.thumbnails.medium.url} className='rounded-md' />
       <div className='flex items-start justify-start py-2'>
         <img src={avatar} className='rounded-full h-8 bg-gray-500 bg-opacity-50 p-1' onClick={viewChannel}/>
         <div className='flex flex-col items-start justify-start px-2 h-[max-content]'>
