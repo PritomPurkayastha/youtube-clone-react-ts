@@ -34,7 +34,7 @@ type YouTubeVideo = {
     defaultAudioLanguage?: string;
   };
   statistics: {
-    commentcount: string;
+    commentCount: string;
     favoriteCount?: string;
     likeCount: string;
     viewCount: string;

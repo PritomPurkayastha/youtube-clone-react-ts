@@ -153,7 +153,7 @@ import {
       },
     ];
     return (
-      <aside className="lg:flex overflow-y-auto scrollbar-hidden w-40">
+      <aside className="lg:flex overflow-y-auto scrollbar-hidden w-50 pl-4">
         <div className="flex flex-col items-start">
           {
             sideBar.map((category: sideBarType, index: number) => (

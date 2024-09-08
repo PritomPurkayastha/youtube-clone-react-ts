@@ -2,13 +2,14 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface CategoryType {
-  id: string,
-  name: string
+  id: string;
+  name: string;
 }
 const initialState: any = {
   categoryList: [],
-  selectedCategoryId: '0',
-  showSidebar: true
+  selectedCategoryId: "0",
+  showSidebar: true,
+  isWatchActive: false,
 };
 
 export const fetchCategoryList = createAsyncThunk(
@@ -20,8 +21,8 @@ export const fetchCategoryList = createAsyncThunk(
         params: {
           key: "AIzaSyCFDi1fdQUIPk72YFZ4sjtBAzR7FHh-xeg",
           part: "snippet",
-          regionCode: "IN"
-        }
+          regionCode: "IN",
+        },
       }
     );
     return response.data;
@@ -36,9 +37,11 @@ const categorySlice = createSlice({
       state.selectedCategoryId = action.payload;
     },
     toggleSidebar: (state, action) => {
-      debugger;
       state.showSidebar = action.payload;
-    }
+    },
+    setIsWatchActive: (state, action) => {
+      state.isWatchActive = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -48,13 +51,13 @@ const categorySlice = createSlice({
           state.status = "succeeded";
           state.categoryList.length = 0;
           state.categoryList.push({
-            id: '0',
-            name: 'All'
+            id: "0",
+            name: "All",
           });
-          for(let i = 0; i < 20 ; i++) {
+          for (let i = 0; i < 20; i++) {
             const data: CategoryType = {
               id: action.payload.items[i].id,
-              name: action.payload.items[i].snippet.title
+              name: action.payload.items[i].snippet.title,
             };
             state.categoryList.push(data);
           }
@@ -67,6 +70,6 @@ const categorySlice = createSlice({
   },
 });
 
-export const {updateSelcetedCategory, toggleSidebar} = categorySlice.actions;
+export const { updateSelcetedCategory, toggleSidebar, setIsWatchActive } = categorySlice.actions;
 export const categoryReducer = categorySlice.reducer;
 export type { CategoryType };

@@ -10,7 +10,7 @@ export const formatNumber = (views:string) => {
     } else if (viewCount >= 1e5) {
         return (viewCount/1e5).toFixed(1) + ' lakh';
     } else if (viewCount >= 1e3) {
-        return (viewCount/1e3).toFixed(1) + ' k';
+        return (viewCount/1e3).toFixed(1) + 'k';
     }
 }
 

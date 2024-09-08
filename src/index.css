@@ -3,17 +3,34 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 rounded-sm;
+  @apply bg-gray-300 rounded-sm;
 }
 
 ::-webkit-scrollbar {
-    @apply bg-transparent w-2;
+  @apply bg-transparent w-2;
 }
 
 .scrollbar-hidden::-webkit-scrollbar-thumb {
-    @apply bg-transparent;
+  @apply bg-transparent;
 }
 
 .scrollbar-hidden:hover::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 w-[10px];
+  @apply bg-gray-300 w-[10px];
+}
+
+.mask-desc {
+  mask-image: linear-gradient(
+      to top,
+      transparent 0%,
+      transparent 2rem,
+      rgb(0, 0, 0) 2rem,
+      rgb(0, 0, 0) 100%
+    ),
+    linear-gradient(
+      to right,
+      rgb(0, 0, 0) 0%,
+      rgb(0, 0, 0) 21px,
+      transparent 45px,
+      transparent 100%
+    );
 }

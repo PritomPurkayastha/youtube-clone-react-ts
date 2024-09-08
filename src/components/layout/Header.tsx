@@ -1,19 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../assets/YouTube-Logo.wine.svg";
 import { ArrowLeft, Bell, Menu, Mic, Search, Upload, User } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { toggleSidebar } from "../../store/slices/homeSlice";
+import { setIsWatchActive, toggleSidebar } from "../../store/slices/homeSlice";
+import { useLocation } from "react-router-dom";
 
 const Header = () => {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
+  const location = useLocation();
+
   const showSidebar =  useSelector(
     (state: RootState) => state.category.showSidebar
   );
+
+  useEffect(() => {
+    if (location.pathname === '/watch') {
+      dispatch(setIsWatchActive(true));
+    } else {
+      dispatch(setIsWatchActive(false));
+    }
+  }, [location]);
   return (
     <div>
-      <div className="hidden sm:flex justify-between content-center gap-10 lg:gap-20">
+      <div className="hidden sm:flex justify-between content-center gap-10 lg:gap-20 pl-2">
         <div className="flex items-center justify-center flex-shrink-0">
           <button className="p-2 hover:bg-slate-800 rounded-full w-10 h-10 flex content-center transition-colors" onClick={() => dispatch(toggleSidebar(!showSidebar))}>
             <Menu />
