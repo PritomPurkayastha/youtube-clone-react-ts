@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { YouTubeVideo } from "../../store/slices/videoSlice";
+import { setCurrentVideo, YouTubeVideo } from "../../store/slices/videoSlice";
 import { formatNumber } from "../../utils/helper";
 import { AlignLeft, Smile } from "lucide-react";
 import avatar from "../../assets/avatar-default-symbolic-svgrepo-com.svg";
@@ -22,7 +22,7 @@ const Comments = () => {
   );
 
   type videoType = YouTubeVideo | null;
-  const [currentVideo, setCurrentVideo] = useState<videoType>(null);
+  const currentVideo = useSelector((state: RootState) => state.video.currentVideoData);
   const [comment, setComment] = useState<string>("");
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -40,8 +40,8 @@ const Comments = () => {
 
   useEffect(() => {
     const video = sessionStorage.getItem("video");
-    if (video) {
-      setCurrentVideo(JSON.parse(video));
+    if (video && currentVideo === null) {
+      dispatch(setCurrentVideo(JSON.parse(video)));
     }
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -73,12 +73,6 @@ const Comments = () => {
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [value]);
-
-  useEffect(() => {
-    if (currentVideo) {
-      dispatch(fetchTopLevelComments({ videoId: currentVideo.id }));
-    }
-  }, [currentVideo]);
 
   const handleInput = () => {
     if (textareaRef.current) {
@@ -204,6 +198,8 @@ const Comments = () => {
             authorChannelId={comment.snippet.topLevelComment.snippet.authorChannelId.value}
             comment={comment.snippet.topLevelComment.snippet.textOriginal}
             totalReplyCount={comment.snippet.totalReplyCount}
+            commentId={comment.id}
+            replies={comment.replies}
           />
         </div>
       ))}

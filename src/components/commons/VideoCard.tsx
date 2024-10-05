@@ -4,6 +4,9 @@ import avatar from "../../assets/avatar-default-symbolic-svgrepo-com.svg";
 import { Dot, Verified } from 'lucide-react';
 import { formatDate, formatNumber } from '../../utils/helper';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
+import { resetComments } from '../../store/slices/commentSlice';
 
 type VideoCardType = {
   video: YouTubeVideo;
@@ -11,9 +14,12 @@ type VideoCardType = {
 
 const VideoCard = ({video}: VideoCardType) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
   const handleVideoPlay = () => {
     navigate(`/watch?v=${video.id}`);
     sessionStorage.setItem('video', JSON.stringify(video));
+    dispatch(resetComments());
   }
 
   const viewChannel = (event: React.MouseEvent<HTMLSpanElement>) => {

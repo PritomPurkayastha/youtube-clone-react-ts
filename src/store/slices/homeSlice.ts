@@ -19,7 +19,7 @@ export const fetchCategoryList = createAsyncThunk(
       "https://www.googleapis.com/youtube/v3/videoCategories",
       {
         params: {
-          key: "AIzaSyCFDi1fdQUIPk72YFZ4sjtBAzR7FHh-xeg",
+          key: import.meta.env.VITE_API_KEY,
           part: "snippet",
           regionCode: "IN",
         },

@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import Sidebar from "./components/layout/Sidebar";
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import WatchPage from "./pages/watchPage";
+import SearchPage from "./pages/searchPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<HomePage />} />
                   <Route path="/watch" element={<WatchPage />} />
+                  <Route path="/results" element={<SearchPage />} />
                 </Routes>
               </div>
             </div>

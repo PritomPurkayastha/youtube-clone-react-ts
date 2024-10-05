@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 type thumbnail = {
@@ -45,7 +45,7 @@ export const fetchVideoList = createAsyncThunk(
   "video/fetchList",
   async (selectedCategoryId: string) => {
     const params: any = {
-      key: "AIzaSyCFDi1fdQUIPk72YFZ4sjtBAzR7FHh-xeg",
+      key:  import.meta.env.VITE_API_KEY,
       part: "snippet, statistics",
       maxResults: 30,
       chart: "mostPopular",
@@ -61,15 +61,36 @@ export const fetchVideoList = createAsyncThunk(
   }
 );
 
+export const fetchSingleVideoData = createAsyncThunk(
+  "video/fetchVideo",
+  async (videoId: string) => {
+    const params: any = {
+      key:  import.meta.env.VITE_API_KEY,
+      part: "snippet, statistics",
+      id: videoId
+    };
+    const response = await axios.get(
+      "https://www.googleapis.com/youtube/v3/videos",
+      { params }
+    );
+    return response.data;
+  }
+);
+
 const initialState: any = {
   homeVideoList: [] as YouTubeVideo[],
   nextPageToken: "" as string,
+  currentVideoData: null as YouTubeVideo | null
 };
 
 const videoListSlice = createSlice({
   name: "video",
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentVideo: (state, action) => {
+      state.currentVideoData = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(
@@ -82,9 +103,20 @@ const videoListSlice = createSlice({
       .addCase(fetchVideoList.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Unknown error";
+      })
+      .addCase(
+        fetchSingleVideoData.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.currentVideoData = action.payload.items[0]
+        }
+      )
+      .addCase(fetchSingleVideoData.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Unknown error";
       });
   },
 });
 
 export const videoListReducer = videoListSlice.reducer;
 export type { YouTubeVideo };
+export const {setCurrentVideo} = videoListSlice.actions;

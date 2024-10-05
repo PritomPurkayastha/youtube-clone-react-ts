@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player/youtube";
-import { YouTubeVideo } from "../../store/slices/videoSlice";
+import { setCurrentVideo, YouTubeVideo } from "../../store/slices/videoSlice";
 import avatar from "../../assets/avatar-default-symbolic-svgrepo-com.svg";
 import {
   ArrowDownToLine,
@@ -15,12 +15,16 @@ import {
   ThumbsUp,
 } from "lucide-react";
 import { formatDate, formatNumber } from "../../utils/helper";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const video = () => {
+  const dispatch = useDispatch();
+  const currentVideo = useSelector((state: RootState) => state.video.currentVideoData);
   type videoType = YouTubeVideo | null;
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLDivElement | null>(null);
-  const [currentVideo, setCurrentVideo] = useState<videoType>(null);
+  // const [currentVideo, setCurrentVideo] = useState<videoType>(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const [dropdownPosition, setDropdownPosition] = useState<"bottom" | "top">(
     "bottom"
@@ -28,7 +32,7 @@ const video = () => {
   useEffect(() => {
     const video = sessionStorage.getItem("video");
     if (video) {
-      setCurrentVideo(JSON.parse(video));
+      dispatch(setCurrentVideo(JSON.parse(video)));
     }
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -63,7 +67,7 @@ const video = () => {
     setIsDropdownVisible(!isDropdownVisible);
   };
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-[max-content]">
       <ReactPlayer
         className="video rounded-md py-2"
         url={`https://www.youtube.com/embed/${currentVideo?.id}`}

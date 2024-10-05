@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import { categoryReducer } from "./slices/homeSlice";
 import { videoListReducer } from "./slices/videoSlice";
 import { commentListReducer } from "./slices/commentSlice";
+import { searchListReducer } from "./slices/searchSlice";
 
 const store = configureStore({
   reducer: {
     category: categoryReducer,
     video: videoListReducer,
-    comment: commentListReducer
+    comment: commentListReducer,
+    search: searchListReducer
   },
 });
 

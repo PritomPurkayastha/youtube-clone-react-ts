@@ -6,6 +6,7 @@ type CommentThread = {
   etag: string;
   id: string;
   snippet: CommentThreadSnippet;
+  replies: Replies[]
 };
 
 type CommentThreadSnippet = {
@@ -43,6 +44,28 @@ type CommentSnippet = {
 type AuthorChannelId = {
   value: string;
 };
+type Replies = {
+  kind: string;
+  etag: string;
+  id: string;
+  snippet: {
+    channelId: string;
+    textDisplay: string;
+    textOriginal: string;
+    parentId: string;
+    authorDisplayName: string;
+    authorProfileImageUrl: string;
+    authorChannelUrl: string;
+    authorChannelId: {
+      value: string;
+    };
+    canRate: boolean;
+    viewerRating: string;
+    likeCount: number;
+    publishedAt: string;
+    updatedAt: string;
+  };
+}
 
 const initialState: any = {
   comments: [] as CommentThread[],
@@ -53,7 +76,7 @@ export const fetchTopLevelComments = createAsyncThunk(
   "comment/fetchList",
   async ({ videoId, nextPageToken = "" }: { videoId: string; nextPageToken?: string | null }) => {
     const params: any = {
-      key: "AIzaSyCFDi1fdQUIPk72YFZ4sjtBAzR7FHh-xeg",
+      key: import.meta.env.VITE_API_KEY,
       part: "snippet",
       maxResults: 20,
       videoId: videoId,
@@ -69,10 +92,31 @@ export const fetchTopLevelComments = createAsyncThunk(
   }
 );
 
+export const fetchCommentReplies = createAsyncThunk(
+  'reply/fetchList',
+  async (commentId: string) => {
+    const params: any = {
+      key: import.meta.env.VITE_API_KEY,
+      part: "snippet",
+      maxResults: 20,
+      parentId: commentId,
+    }
+    const response = await axios.get(
+      "https://www.googleapis.com/youtube/v3/comments",
+      {params}
+    );
+    return response.data;
+  }
+)
+
 const commentSlice = createSlice({
   name: 'comment',
   initialState,
-  reducers: {},
+  reducers: {
+    resetComments: (state) => {
+      state.comments.length = 0;
+    }
+  },
   extraReducers: (builder) => {
     builder
     .addCase(
@@ -89,9 +133,23 @@ const commentSlice = createSlice({
     .addCase(fetchTopLevelComments.rejected, (state, action) => {
       state.status = "failed";
       state.error = action.error.message || "Unknown error";
-    });
+    })
+    .addCase(fetchCommentReplies.fulfilled,
+      (state, action: PayloadAction<any>) => {
+        state.comments.forEach((comment: CommentThread) => {
+          if(comment.id === action.payload.items[0].snippet.parentId) {
+            comment.replies = action.payload.items;
+          }
+        });
+      }
+    )
+    .addCase(fetchCommentReplies.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message || "Unknown error";
+    })
   }
 });
 
+export const { resetComments } = commentSlice.actions;
 export const commentListReducer = commentSlice.reducer;
-export type { CommentThread };
+export type { CommentThread, Replies };
