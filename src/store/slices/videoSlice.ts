@@ -55,7 +55,7 @@ export const fetchVideoList = createAsyncThunk(
       params.videoCategoryId = selectedCategoryId;
     }
     const response = await axios.get(
-      "https://www.googleapis.com/youtube/v3/videos",
+      "/youtube-api/videos",
       { params }
     );
     return response.data;
@@ -71,7 +71,7 @@ export const fetchSingleVideoData = createAsyncThunk(
       id: videoId
     };
     const response = await axios.get(
-      "https://www.googleapis.com/youtube/v3/videos",
+      "/youtube-api/videos",
       { params }
     );
     return response.data;

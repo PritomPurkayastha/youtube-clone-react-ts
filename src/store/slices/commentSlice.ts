@@ -85,7 +85,7 @@ export const fetchTopLevelComments = createAsyncThunk(
       params.pageToken = nextPageToken;
     }
     const response = await axios.get(
-      "https://www.googleapis.com/youtube/v3/commentThreads",
+      "/youtube-api/commentThreads",
       { params }
     );
     return response.data;
@@ -102,7 +102,7 @@ export const fetchCommentReplies = createAsyncThunk(
       parentId: commentId,
     }
     const response = await axios.get(
-      "https://www.googleapis.com/youtube/v3/comments",
+      "/youtube-api/comments",
       {params}
     );
     return response.data;

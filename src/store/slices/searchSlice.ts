@@ -49,7 +49,7 @@ export const fetchSearchResult = createAsyncThunk(
   "search/fetchList",
   async (params: any) => {
     const response = await axios.get(
-      "https://www.googleapis.com/youtube/v3/search",
+      "/youtube-api/search",
       { params }
     );
     return response.data;

@@ -14,7 +14,7 @@ export const fetchPlayListItems = createAsyncThunk(
       playlistId: playListId
     };
     const response = await axios.get(
-      "https://www.googleapis.com/youtube/v3/playlistItems",
+      "/youtube-api/playlistItems",
       { params }
     );
     return response.data;
