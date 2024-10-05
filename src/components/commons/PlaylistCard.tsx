@@ -12,7 +12,7 @@ type Props = {
 const PlaylistCard = ({thumbnail, title, publishedAt, description, channelTitle, playListId}: Props) => {
   const [showPlayButton, setShowPlayButton] = React.useState<boolean>(false);
   const handleVideoPlay = (playListId: string) => {
-
+    console.log(playListId, publishedAt);
   }
   const handleShowPlayList = (event: any) => {
     event.stopPropagation();

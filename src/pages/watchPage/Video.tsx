@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player/youtube";
 import { setCurrentVideo, YouTubeVideo } from "../../store/slices/videoSlice";
 import avatar from "../../assets/avatar-default-symbolic-svgrepo-com.svg";
@@ -7,21 +7,20 @@ import {
   Bookmark,
   CircleDollarSign,
   Ellipsis,
-  EllipsisVertical,
   Flag,
   Forward,
   Scissors,
   ThumbsDown,
   ThumbsUp,
 } from "lucide-react";
-import { formatDate, formatNumber } from "../../utils/helper";
+import { formatNumber } from "../../utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
 const video = () => {
   const dispatch = useDispatch();
-  const currentVideo = useSelector((state: RootState) => state.video.currentVideoData);
   type videoType = YouTubeVideo | null;
+  const currentVideo: videoType = useSelector((state: RootState) => state.video.currentVideoData);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLDivElement | null>(null);
   // const [currentVideo, setCurrentVideo] = useState<videoType>(null);

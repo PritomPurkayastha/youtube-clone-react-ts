@@ -1,12 +1,11 @@
 import { formatDate, formatNumber } from "../../utils/helper";
 import avatar from "../../assets/avatar-default-symbolic-svgrepo-com.svg";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
 import { resetComments } from "../../store/slices/commentSlice";
 import {
   fetchSingleVideoData,
-  fetchVideoList,
 } from "../../store/slices/videoSlice";
 import { Bookmark, Clock5, EllipsisVertical, Flag, ListVideo, Share } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -38,7 +37,6 @@ const VideoInfoCard = ({
     "bottom"
   );
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const video = useSelector((state: RootState) => state.video.currentVideoData);
 
   const handleVideoPlay = async (id: string) => {
     try {

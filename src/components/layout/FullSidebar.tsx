@@ -23,7 +23,7 @@ import {
     UserPen,
     Youtube,
   } from "lucide-react";
-  import React, { ElementType } from "react";
+  import { ElementType } from "react";
   
   const FullSidebar = () => {
     type entries = {

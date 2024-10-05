@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Video from './Video'
 import Comments from './Comments'
 import RecommendedVideos from './RecommendedVideos'
@@ -11,7 +11,7 @@ import { fetchTopLevelComments } from '../../store/slices/commentSlice'
 const WatchPage = () => {
   type videoType = YouTubeVideo | null;
   const dispatch = useDispatch<AppDispatch>();
-  const currentVideo = useSelector((state: RootState) => state.video.currentVideoData);
+  const currentVideo: videoType = useSelector((state: RootState) => state.video.currentVideoData);
   useEffect(() => {
     const video = sessionStorage.getItem("video");
     if (video) {

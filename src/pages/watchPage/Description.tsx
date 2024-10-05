@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { setCurrentVideo, YouTubeVideo } from "../../store/slices/videoSlice";
 import { formatDate, formatNumber } from "../../utils/helper";
 import { RootState } from "../../store/store";
@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 const Description = () => {
   const dispatch = useDispatch();
   type videoType = YouTubeVideo | null;
-  const currentVideo = useSelector((state: RootState) => state.video.currentVideoData);
+  const currentVideo: videoType = useSelector((state: RootState) => state.video.currentVideoData);
   const [showFullDescription, setShowFullDescription] = useState<boolean>(false);
   useEffect(() => {
     const video = sessionStorage.getItem("video");

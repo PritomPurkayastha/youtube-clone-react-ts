@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formatDate, formatNumber } from "../../utils/helper";
 import {
-  ArrowDown,
   ChevronDown,
   EllipsisVertical,
   Flag,
@@ -21,7 +20,7 @@ type Props = {
   updatedAt?: string;
   totalReplyCount?: number;
   isPublic?: boolean;
-  authorChannelId: string;
+  authorChannelId?: string;
   comment: string;
   commentId: string;
   replies?: Replies[];
@@ -30,18 +29,14 @@ type Props = {
 const Comment = ({
   profileImage,
   authorName,
-  channelId,
   likeCount,
   publishedAt,
   updatedAt,
   totalReplyCount,
-  isPublic,
-  authorChannelId,
   comment,
   commentId,
   replies,
 }: Props) => {
-  const [showFullComment, setShowFullComment] = useState<boolean>(false);
   const [showReplies, setShowReplies] = useState<boolean>(false);
   const [showReportPopUp, setShowReportPopUp] = useState<boolean>(false);
   const [dropdownPosition, setDropdownPosition] = useState<"bottom" | "top">(
@@ -126,15 +121,9 @@ const Comment = ({
             )}
           </div>
         </div>
-        {!showFullComment ? (
-          <div className="max-h-[200px] pr-10 text-ellipsis overflow-hidden whitespace-pre-wrap relative font-medium">
-            {comment}
-          </div>
-        ) : (
-          <div className="h-[max-content] pr-10 whitespace-pre-wrap relative">
-            {comment}
-          </div>
-        )}
+        <div className="h-[max-content] pr-10 whitespace-pre-wrap relative">
+          {comment}
+        </div>
         <div className="flex items-center gap-3 py-2">
           <div className="flex items-center font-thin gap-2">
             <ThumbsUp className="font-thin text-[5px]" />

@@ -1,9 +1,7 @@
 import { HomeIcon, Link, Library, BookCopy } from "lucide-react";
-import React, { ElementType } from "react";
+import { ElementType } from "react";
 
-type Props = {};
-
-const CollapsedSidebar = (props: Props) => {
+const CollapsedSidebar = () => {
   type entries = {
     icon: ElementType;
     text: string;

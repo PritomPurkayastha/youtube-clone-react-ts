@@ -1,9 +1,8 @@
-import { useState } from "react";
 import "./App.css";
 import Header from "./components/layout/Header";
 import HomePage from "./pages/HomePage";
 import Sidebar from "./components/layout/Sidebar";
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WatchPage from "./pages/watchPage";
 import SearchPage from "./pages/searchPage";
 
@@ -18,6 +17,7 @@ function App() {
               <div className='sticky top-0 bg-[#0f0f0f] z-10 pb-4'>
                 <Routes>
                   <Route path="/" element={<HomePage />} />
+                  <Route path="/youtube-clone-react-ts" element={<HomePage />} />
                   <Route path="/watch" element={<WatchPage />} />
                   <Route path="/results" element={<SearchPage />} />
                 </Routes>

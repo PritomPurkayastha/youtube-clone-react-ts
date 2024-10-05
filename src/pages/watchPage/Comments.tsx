@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { setCurrentVideo, YouTubeVideo } from "../../store/slices/videoSlice";
 import { formatNumber } from "../../utils/helper";
 import { AlignLeft, Smile } from "lucide-react";
@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import {
   CommentThread,
-  fetchTopLevelComments,
 } from "../../store/slices/commentSlice";
 import Comment from "../../components/commons/Comment";
 
@@ -17,20 +16,17 @@ const Comments = () => {
   const commentList: CommentThread[] = useSelector(
     (state: RootState) => state.comment.comments
   );
-  const nextPageToken = useSelector(
-    (state: RootState) => state.comment.nextPageToken
-  );
+  // const nextPageToken = useSelector(
+  //   (state: RootState) => state.comment.nextPageToken
+  // );
 
   type videoType = YouTubeVideo | null;
-  const currentVideo = useSelector((state: RootState) => state.video.currentVideoData);
-  const [comment, setComment] = useState<string>("");
+  const currentVideo: videoType = useSelector((state: RootState) => state.video.currentVideoData);
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [showEmojiPicker, setshowEmojiPicker] = useState<boolean>(false);
   const [showSortOptions, setShowSortOptions] = useState<boolean>(false);
-  const [dropdownPosition, setDropdownPosition] = useState<"bottom" | "top">(
-    "bottom"
-  );
+  const dropdownPosition = "bottom";
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const emojiPickerRef = useRef<HTMLDivElement>(null);
@@ -74,34 +70,18 @@ const Comments = () => {
     }
   }, [value]);
 
-  const handleInput = () => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto"; // Reset the height to recalculate the new height
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Set the new height
-    }
-  };
+  // const handleInput = () => {
+  //   if (textareaRef.current) {
+  //     textareaRef.current.style.height = "auto"; // Reset the height to recalculate the new height
+  //     textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Set the new height
+  //   }
+  // };
 
   const toggleEmojiPicker = () => {
     setshowEmojiPicker(!showEmojiPicker);
   };
   const handleEmojiClick = (emojiData: EmojiClickData) => {
     setValue((prev) => prev + emojiData.emoji);
-  };
-  const hanldeEcllipsis = () => {
-    if (sortButtonRef.current) {
-      const buttonRect = sortButtonRef.current.getBoundingClientRect();
-      const spaceBelow = window.innerHeight - buttonRect.bottom;
-      const spaceAbove = buttonRect.top;
-
-      if (spaceBelow > 200) {
-        setDropdownPosition("bottom");
-      } else if (spaceAbove > 200) {
-        setDropdownPosition("top");
-      } else {
-        setDropdownPosition("bottom");
-      }
-    }
-    setShowSortOptions(!showSortOptions);
   };
 
   return (

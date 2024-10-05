@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState: any = {
+// const initialState: any = {
   
-}
+// }
 
 export const fetchPlayListItems = createAsyncThunk(
   "search/playList",

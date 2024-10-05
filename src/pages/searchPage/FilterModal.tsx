@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { fetchSearchResult } from "../../store/slices/searchSlice";
-import { format, subHours, startOfDay, startOfWeek, startOfMonth, startOfYear } from 'date-fns';
+import { format, subHours} from 'date-fns';
 
 interface ChildProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;

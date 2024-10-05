@@ -1,5 +1,5 @@
 import { AppDispatch, RootState } from "../../store/store";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCategoryList,
@@ -8,8 +8,6 @@ import {
   // fetchVideoList
 } from "../../store/slices/homeSlice";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
-type Props = {};
 
 const Categories = () => {
   const dispatch = useDispatch<AppDispatch>();

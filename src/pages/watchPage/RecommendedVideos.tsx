@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
-import video from './Video';
 import { fetchVideoList, YouTubeVideo } from '../../store/slices/videoSlice';
-import VideoInfoCard from '../../components/commons/VideoInfoCard';
-import VideoCard from '../../components/commons/VideoCard';
 import RecommendedVideoCard from '../../components/commons/RecommondedVideoCard';
 
 
@@ -15,6 +12,7 @@ const RecommendedVideos = () => {
     (state: RootState) => state.video.homeVideoList
   );
   const [currentVideo, setCurrentVideo] = useState<videoType>(null);
+
   useEffect(() => {
     const video = sessionStorage.getItem("video");
     if (video) {
@@ -31,7 +29,6 @@ const RecommendedVideos = () => {
             title={video.snippet.title}
             viewCount={Number(video.statistics.viewCount)}
             publishedAt={video.snippet.publishedAt}
-            description={video.snippet.description}
             channelTitle={video.snippet.channelTitle}
             videoId={video.id}
             type={'recommendedVideo'}

@@ -2,7 +2,7 @@ import { SlidersHorizontal } from "lucide-react";
 import Categories from "../HomePage/Categories";
 import { useSelector } from "react-redux";
 import { YouTubeSearchResult } from "../../store/slices/searchSlice";
-import { AppDispatch, RootState } from "../../store/store";
+import { RootState } from "../../store/store";
 import ChannelCard from "../../components/commons/ChannelCard";
 import VideoInfoCard from "../../components/commons/VideoInfoCard";
 import { useState } from "react";

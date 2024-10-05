@@ -2,20 +2,17 @@ import { Thumbnails } from "../../store/slices/searchSlice";
 import { formatNumber } from "../../utils/helper";
 
 type Props = {
-  channelId: string;
+  channelId?: string;
   channelTitle: string;
   description: string;
-  publishedAt: string;
-  liveBroadcastContent: string;
+  publishedAt?: string;
+  liveBroadcastContent?: string;
   channelLogo: Thumbnails;
   subscriberCount: number;
 };
 const ChannelCard = ({
-  channelId,
   channelTitle,
   description,
-  publishedAt,
-  liveBroadcastContent,
   channelLogo,
   subscriberCount,
 }: Props) => {

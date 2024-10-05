@@ -20,7 +20,6 @@ type Props = {
   title: string;
   viewCount: number;
   publishedAt: string;
-  description: string;
   channelTitle: string;
   videoId: string;
   type: string;
@@ -30,7 +29,6 @@ const RecommendedVideoCard = ({
   title,
   viewCount,
   publishedAt,
-  description,
   channelTitle,
   videoId,
   type,
