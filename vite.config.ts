@@ -10,8 +10,8 @@ export default defineConfig({
     proxy: {
       '/youtube-api': {
         target: 'https://www.googleapis.com/youtube/v3',
-        changeOrigin: true, // This makes the proxy change the origin to the target URL
-        rewrite: (path) => path.replace(/^\/youtube-api/, ''), // Rewrites /youtube-api in your requests to ''
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/youtube-api/, ''),
       },
     },
   },
