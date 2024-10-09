@@ -16,7 +16,7 @@ export const fetchCategoryList = createAsyncThunk(
   "category/fetchList",
   async () => {
     const response = await axios.get(
-      "/youtube-api/videoCategories",
+      "https://www.googleapis.com/youtube/v3/videoCategories",
       {
         params: {
           key: import.meta.env.VITE_API_KEY,

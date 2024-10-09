@@ -5,17 +5,5 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: "/youtube-clone-react-ts/",
   plugins: [react()],
-  envPrefix: 'VITE_',
-  server: {
-    proxy: {
-      '/youtube-api': {
-        target: 'https://www.googleapis.com/youtube/v3',
-        changeOrigin: true,
-        rewrite: (path) => {
-          console.log('Proxying request:', path);
-          return path.replace(/^\/youtube-api/, '');
-        },
-      },
-    }
-  },
+  envPrefix: 'VITE_'
 })
