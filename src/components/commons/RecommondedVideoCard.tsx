@@ -86,7 +86,6 @@ const RecommendedVideoCard = ({
           JSON.stringify(resultAction.payload.items[0])
         );
         dispatch(resetComments());
-        debugger;
         navigate(`/watch?v=${videoId}`);
       } else if (fetchSingleVideoData.rejected.match(resultAction)) {
         console.error(
