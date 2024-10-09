@@ -9,10 +9,13 @@ export default defineConfig({
   server: {
     proxy: {
       '/youtube-api': {
-        target: 'https://www.googleapis.com',
+        target: 'https://www.googleapis.com/youtube/v3',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/youtube-api/, '/youtube/v3'),
+        rewrite: (path) => {
+          console.log('Proxying request:', path);
+          return path.replace(/^\/youtube-api/, '');
+        },
       },
-    },
+    }
   },
 })
