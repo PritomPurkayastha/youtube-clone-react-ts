@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { setCurrentVideo, YouTubeVideo } from "../../store/slices/videoSlice";
+import { YouTubeVideo } from "../../store/slices/videoSlice";
 import { formatNumber } from "../../utils/helper";
 import { AlignLeft, Smile } from "lucide-react";
 import avatar from "../../assets/avatar-default-symbolic-svgrepo-com.svg";
@@ -10,6 +10,8 @@ import {
   CommentThread,
 } from "../../store/slices/commentSlice";
 import Comment from "../../components/commons/Comment";
+import useHandleClickOutside from "../../utils/useHandleClickOutside";
+import useGetCurrentVideoData from "../../utils/useGetCurrentVideoData";
 
 const Comments = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,35 +35,9 @@ const Comments = () => {
   const emojiButtonRef = useRef<HTMLDivElement>(null);
   const sortButtonRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const video = sessionStorage.getItem("video");
-    if (video && currentVideo === null) {
-      dispatch(setCurrentVideo(JSON.parse(video)));
-    }
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        emojiPickerRef.current &&
-        !emojiPickerRef.current.contains(event.target as Node) &&
-        emojiButtonRef.current &&
-        !emojiButtonRef.current.contains(event.target as Node)
-      ) {
-        setshowEmojiPicker(false);
-      }
-
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setShowSortOptions(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  useHandleClickOutside(emojiPickerRef, () => setshowEmojiPicker(false), emojiButtonRef);
+  useHandleClickOutside(dropdownRef, () => setShowSortOptions(false));
+  useGetCurrentVideoData();
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -154,7 +130,7 @@ const Comments = () => {
                 )}
               </div>
               <div className="flex items-center gap-4">
-                <button className="p-2 rounded-full hover:bg-white-opacity-20 text-[#f1f1f1] bg-transparent">
+                <button className="p-2 rounded-full hover:bg-white-opacity-20 text-[#f1f1f1] bg-transparent" onClick={() => setIsFocused(false)}>
                   Cancel
                 </button>
                 <button className="rounded-full bg-[#3ea6ff] p-2 text-black text-md font-medium">

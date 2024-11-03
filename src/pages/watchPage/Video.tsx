@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player/youtube";
-import { setCurrentVideo, YouTubeVideo } from "../../store/slices/videoSlice";
+import { YouTubeVideo } from "../../store/slices/videoSlice";
 import avatar from "../../assets/avatar-default-symbolic-svgrepo-com.svg";
 import {
   ArrowDownToLine,
@@ -16,6 +16,8 @@ import {
 import { formatNumber } from "../../utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import useHandleClickOutside from "../../utils/useHandleClickOutside";
+import useGetCurrentVideoData from "../../utils/useGetCurrentVideoData";
 
 const video = () => {
   const dispatch = useDispatch();
@@ -23,31 +25,12 @@ const video = () => {
   const currentVideo: videoType = useSelector((state: RootState) => state.video.currentVideoData);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLDivElement | null>(null);
-  // const [currentVideo, setCurrentVideo] = useState<videoType>(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const [dropdownPosition, setDropdownPosition] = useState<"bottom" | "top">(
     "bottom"
   );
-  useEffect(() => {
-    const video = sessionStorage.getItem("video");
-    if (video) {
-      dispatch(setCurrentVideo(JSON.parse(video)));
-    }
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsDropdownVisible(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  useHandleClickOutside(dropdownRef, () => setIsDropdownVisible(false));
+  useGetCurrentVideoData();
 
   const hanldeEcllipsis = () => {
     if (buttonRef.current) {
@@ -70,7 +53,7 @@ const video = () => {
       <ReactPlayer
         className="video rounded-md py-2"
         url={`https://www.youtube.com/embed/${currentVideo?.id}`}
-        playing={false}
+        playing={true}
         width="100%"
         height="70vh"
         controls

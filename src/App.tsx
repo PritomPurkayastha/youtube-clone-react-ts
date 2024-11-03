@@ -8,7 +8,7 @@ import SearchPage from "./pages/searchPage";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/youtube-clone-react-ts">
       <div className="h-screen bg-[#0f0f0f] text-white flex flex-col max-w-[100vw]">
         <Header/>
         <div className='grid grid-cols-[auto_1fr] flex-grow-1 overflow-auto relative'>

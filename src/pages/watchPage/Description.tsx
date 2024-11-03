@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
-import { setCurrentVideo, YouTubeVideo } from "../../store/slices/videoSlice";
+import { YouTubeVideo } from "../../store/slices/videoSlice";
 import { formatDate, formatNumber } from "../../utils/helper";
 import { RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
+import useGetCurrentVideoData from "../../utils/useGetCurrentVideoData";
 
 const Description = () => {
   const dispatch = useDispatch();
   type videoType = YouTubeVideo | null;
   const currentVideo: videoType = useSelector((state: RootState) => state.video.currentVideoData);
   const [showFullDescription, setShowFullDescription] = useState<boolean>(false);
-  useEffect(() => {
-    const video = sessionStorage.getItem("video");
-    if (video) {
-      dispatch(setCurrentVideo(JSON.parse(video)));
-    }
-    console.log(currentVideo, "currentVideo555")
-  }, []);
+  useGetCurrentVideoData();
+
   return (
     <div className="rounded-md bg-[#FFFFFF1A] max-h-[max-content] p-4 flex flex-col items-start my-4 w-full">
       <div className="flex flex-col gap-2 text-[#F1F1F1] font-bold text-sm">

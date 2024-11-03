@@ -3,21 +3,18 @@ import Video from './Video'
 import Comments from './Comments'
 import RecommendedVideos from './RecommendedVideos'
 import Description from './Description'
-import { setCurrentVideo, YouTubeVideo } from "../../store/slices/videoSlice";
+import { YouTubeVideo } from "../../store/slices/videoSlice";
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../store/store'
 import { fetchTopLevelComments } from '../../store/slices/commentSlice'
+import useGetCurrentVideoData from '../../utils/useGetCurrentVideoData'
 
 const WatchPage = () => {
   type videoType = YouTubeVideo | null;
   const dispatch = useDispatch<AppDispatch>();
   const currentVideo: videoType = useSelector((state: RootState) => state.video.currentVideoData);
-  useEffect(() => {
-    const video = sessionStorage.getItem("video");
-    if (video) {
-      dispatch(setCurrentVideo(JSON.parse(video)));
-    }
-  }, []);
+  useGetCurrentVideoData();
+
   useEffect(() => {
     if (currentVideo) {
       dispatch(fetchTopLevelComments({ videoId: currentVideo.id }));

@@ -10,6 +10,7 @@ import {
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { fetchCommentReplies, Replies } from "../../store/slices/commentSlice";
+import useHandleClickOutside from "../../utils/useHandleClickOutside";
 
 type Props = {
   profileImage: string;
@@ -52,22 +53,8 @@ const Comment = ({
     }
     setShowReplies(!showReplies);
   };
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setShowReportPopUp(false);
-      }
-    };
+  useHandleClickOutside(dropdownRef, () => setShowReportPopUp(false));
 
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
   const handleEllipsis = () => {
     if (buttonRef.current) {
       const buttonRect = buttonRef.current.getBoundingClientRect();

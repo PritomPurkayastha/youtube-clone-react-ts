@@ -9,6 +9,7 @@ import {
 } from "../../store/slices/videoSlice";
 import { Bookmark, Clock5, EllipsisVertical, Flag, ListVideo, Share } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import useHandleClickOutside from "../../utils/useHandleClickOutside";
 
 type Props = {
   thumbnail: string;
@@ -37,6 +38,7 @@ const VideoInfoCard = ({
     "bottom"
   );
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  useHandleClickOutside(dropdownRef, () => setShowOptions(false), buttonRef);
 
   const handleVideoPlay = async (id: string) => {
     try {
@@ -75,24 +77,6 @@ const VideoInfoCard = ({
     }
     setShowOptions(!showOptions);
   };
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node) &&
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target as Node)
-      ) {
-        setShowOptions(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
   return (
     <div
       className="grid grid-cols-12 h-[max-content] p-4 cursor-pointer"

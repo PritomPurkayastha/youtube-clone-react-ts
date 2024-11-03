@@ -14,6 +14,7 @@ import { resetComments } from "../../store/slices/commentSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
+import useHandleClickOutside from "../../utils/useHandleClickOutside";
 
 type Props = {
   thumbnail: string;
@@ -41,8 +42,10 @@ const RecommendedVideoCard = ({
   );
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  useHandleClickOutside(dropdownRef, () => setShowOptions(false), buttonRef);
   
-  const handleEllipsis = () => {
+  const handleEllipsis = (event: any) => {
+    event.stopPropagation();
     if (buttonRef.current) {
       const buttonRect = buttonRef.current.getBoundingClientRect();
       const spaceBelow = window.innerHeight - buttonRect.bottom;
@@ -58,24 +61,6 @@ const RecommendedVideoCard = ({
     }
     setShowOptions(!showOptions);
   };
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node) &&
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target as Node)
-      ) {
-        setShowOptions(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
   const handleVideoPlay = async () => {
     try {
       const resultAction = await dispatch(fetchSingleVideoData(videoId));
