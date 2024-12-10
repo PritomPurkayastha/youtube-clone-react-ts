@@ -15,8 +15,8 @@ const SearchPage = () => {
   );
   const [showModal, setShowModal] = useState<boolean>(false);
   return (
-    <div className="flex flex-col">
-      <div className="grid grid-cols-12 items-center">
+    <div className="flex flex-col items-center justify-center">
+      <div className="grid grid-cols-12 items-center w-5/6">
         <div className="col-span-11">
           <Categories />
         </div>
@@ -30,7 +30,7 @@ const SearchPage = () => {
         }
       </div>
       {searchResult && (
-        <div className="flex flex-col">
+        <div className="flex flex-col w-5/6">
           {searchResult.map((result: YouTubeSearchResult) => (
             <div>
               {result.id.kind === "youtube#channel" ? (

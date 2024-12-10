@@ -81,10 +81,10 @@ const VideoInfoCard = ({
     <div
       className="grid grid-cols-12 h-[max-content] p-4 cursor-pointer"
     >
-      <div className="col-span-6 h-[300px]" onClick={() => handleVideoPlay(videoId)}>
+      <div className="col-span-5  aspect-w-16 aspect-h-9" onClick={() => handleVideoPlay(videoId)}>
         <img src={thumbnail} className="h-full w-full rounded-md" />
       </div>
-      <div className="col-span-5 flex flex-col pl-4" onClick={() => handleVideoPlay(videoId)}>
+      <div className="col-span-6 flex flex-col pl-4" onClick={() => handleVideoPlay(videoId)}>
         <span className="font-medium text-[#F1F1F1] text-[18px] pb-2 overflow-hidden text-ellipsis max-h-12 leading-6">
           {title}
         </span>
