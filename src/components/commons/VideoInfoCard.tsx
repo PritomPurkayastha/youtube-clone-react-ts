@@ -40,27 +40,10 @@ const VideoInfoCard = ({
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   useHandleClickOutside(dropdownRef, () => setShowOptions(false), buttonRef);
 
-  const handleVideoPlay = async (id: string) => {
-    try {
-      const resultAction = await dispatch(fetchSingleVideoData(id));
-
-      if (fetchSingleVideoData.fulfilled.match(resultAction)) {
-        sessionStorage.setItem(
-          "video",
-          JSON.stringify(resultAction.payload.items[0])
-        );
-        dispatch(resetComments());
-        navigate(`/watch?v=${id}`);
-      } else if (fetchSingleVideoData.rejected.match(resultAction)) {
-        console.error(
-          "Failed to fetch video data: ",
-          resultAction.error.message
-        );
-      }
-    } catch (error) {
-      console.error("An error occurred while fetching video data:", error);
-    }
+  const handleVideoPlay = (id: string) => {
+    navigate(`/watch?v=${id}`);
   };
+
   const handleEllipsis = () => {
     if (buttonRef.current) {
       const buttonRect = buttonRef.current.getBoundingClientRect();
