@@ -56,7 +56,7 @@ const Header = () => {
           <button className="p-2 hover:bg-slate-800 rounded-full w-10 h-10 flex content-center transition-colors" onClick={() => dispatch(toggleSidebar(!showSidebar))}>
             <Menu />
           </button>
-          <img src={logo} className="h-16 flex-shrink-0" onClick={handleRefresh}/>
+          <img src={logo} className="h-16 w-28 flex-shrink-0" onClick={handleRefresh}/>
         </div>
         <div className="hidden sm:flex items-center justify-center gap-4 flex-shrink-0 sm:w-1/4 md:w-2/4 xl:w-[800px]">
           <form className="flex flex-grow" onSubmit={handleSearchVideo}>

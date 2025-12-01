@@ -31,7 +31,7 @@ const VideoCard = ({video}: VideoCardType) => {
     <div className="shadow-sm h-[max-content] w-[100%] flex flex-col cursor-pointer" onClick={handleVideoPlay}>
       <img src={video.snippet.thumbnails.medium.url} className='rounded-md' />
       <div className='flex items-start justify-start py-2'>
-        <img src={avatar} className='rounded-full h-8 bg-gray-500 bg-opacity-50 p-1' onClick={viewChannel}/>
+        <img src={avatar} className='rounded-full h-8 w-8 min-w-[32px] bg-gray-500 bg-opacity-50 p-1 object-cover flex-shrink-0' onClick={viewChannel}/>
         <div className='flex flex-col items-start justify-start px-2 h-[max-content]'>
           <span className='text-xl font-serif text-[#f1f1f] overflow-hidden text-ellipsis leading-8 max-h-14 h-full whitespace-normal'>{video.snippet.title}</span>
           <div className='flex items-center gap-1 pt-2'>
