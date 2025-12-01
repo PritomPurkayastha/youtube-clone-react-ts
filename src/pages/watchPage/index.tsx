@@ -3,7 +3,7 @@ import Video from './Video'
 import Comments from './Comments'
 import RecommendedVideos from './RecommendedVideos'
 import Description from './Description'
-import { fetchSingleVideoData, YouTubeVideo } from "../../store/slices/videoSlice";
+import { fetchSingleVideoData, setCurrentVideo, YouTubeVideo } from "../../store/slices/videoSlice";
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../store/store'
 import { fetchTopLevelComments, resetComments } from '../../store/slices/commentSlice'
@@ -28,10 +28,9 @@ const WatchPage = () => {
     const resultAction = await dispatch(fetchSingleVideoData(videoId));
     try {
       if (fetchSingleVideoData.fulfilled.match(resultAction)) {
-        sessionStorage.setItem(
-          "video",
-          JSON.stringify(resultAction.payload.items[0])
-        );
+        debugger;
+        dispatch(setCurrentVideo(resultAction.payload.items[0]));
+        dispatch(fetchTopLevelComments({ videoId: resultAction.payload.items[0].id }));
         dispatch(resetComments());
       } else if (fetchSingleVideoData.rejected.match(resultAction)) {
         console.error(

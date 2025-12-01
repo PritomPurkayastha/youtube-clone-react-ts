@@ -10,7 +10,7 @@ const Description = () => {
   type videoType = YouTubeVideo | null;
   const currentVideo: videoType = useSelector((state: RootState) => state.video.currentVideoData);
   const [showFullDescription, setShowFullDescription] = useState<boolean>(false);
-  useGetCurrentVideoData();
+  // useGetCurrentVideoData();
 
   return (
     <div className="rounded-md bg-[#FFFFFF1A] max-h-[max-content] p-4 flex flex-col items-start my-4 w-full">

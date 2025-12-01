@@ -30,7 +30,7 @@ const video = () => {
     "bottom"
   );
   useHandleClickOutside(dropdownRef, () => setIsDropdownVisible(false));
-  useGetCurrentVideoData();
+  // useGetCurrentVideoData();
 
   const hanldeEcllipsis = () => {
     if (buttonRef.current) {
