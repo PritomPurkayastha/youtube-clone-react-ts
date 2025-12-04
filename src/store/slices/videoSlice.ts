@@ -81,7 +81,9 @@ export const fetchSingleVideoData = createAsyncThunk(
 const initialState: any = {
   homeVideoList: [] as YouTubeVideo[],
   nextPageToken: "" as string,
-  currentVideoData: null as YouTubeVideo | null
+  currentVideoData: null as YouTubeVideo | null,
+  isVideoListLoading: false as boolean,
+  isCurrentVideoLoading: false as boolean
 };
 
 const videoListSlice = createSlice({
@@ -94,24 +96,34 @@ const videoListSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchVideoList.pending, (state) => {
+        state.isVideoListLoading = true;
+      })
       .addCase(
         fetchVideoList.fulfilled,
         (state, action: PayloadAction<any>) => {
+          state.isVideoListLoading = false;
           state.homeVideoList.length = 0;
           state.homeVideoList.push(...action.payload.items);
         }
       )
       .addCase(fetchVideoList.rejected, (state, action) => {
+        state.isVideoListLoading = false;
         state.status = "failed";
         state.error = action.error.message || "Unknown error";
+      })
+      .addCase(fetchSingleVideoData.pending, (state) => {
+        state.isCurrentVideoLoading = true;
       })
       .addCase(
         fetchSingleVideoData.fulfilled,
         (state, action: PayloadAction<any>) => {
+          state.isCurrentVideoLoading = false;
           state.currentVideoData = action.payload.items[0]
         }
       )
       .addCase(fetchSingleVideoData.rejected, (state, action) => {
+        state.isCurrentVideoLoading = false;
         state.status = "failed";
         state.error = action.error.message || "Unknown error";
       });

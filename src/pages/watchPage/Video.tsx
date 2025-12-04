@@ -53,10 +53,11 @@ const video = () => {
       <ReactPlayer
         className="video rounded-md py-2"
         url={`https://www.youtube.com/embed/${currentVideo?.id}`}
-        playing={true}
+        playing={false}
         width="100%"
         height="70vh"
         controls
+        light={true}
       />
       <div className="w-full flex flex-col">
         <span className="py-2 text-[#fff] font-bold text-xl">
