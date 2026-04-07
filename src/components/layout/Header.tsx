@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import logo from "../../assets/YouTube-Logo.wine.svg";
 import { ArrowLeft, Bell, Menu, Mic, Search, Upload, User } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,7 @@ const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
   const navigate = useNavigate();
+  const [_, startTransition] = useTransition();
 
   const showSidebar =  useSelector(
     (state: RootState) => state.category.showSidebar
@@ -34,20 +35,27 @@ const Header = () => {
   
   const handleSearchVideo = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    navigate(`/results?search_query=${inputValue}`);
-    const apiKey = import.meta.env.VITE_API_KEY;
-    const params = {
-      key: apiKey,
-      part: 'snippet',
-      q: inputValue,
-      maxResults: 20
-    }
-    dispatch(fetchSearchResult(params));
+    if (!inputValue.trim()) return;
+
+    startTransition(() => {
+      navigate(`/results?search_query=${inputValue}`);
+      
+      const apiKey = import.meta.env.VITE_API_KEY;
+      const params = {
+        key: apiKey,
+        part: 'snippet',
+        q: inputValue,
+        maxResults: 20
+      };
+      dispatch(fetchSearchResult(params));
+    });
   }
 
   const handleRefresh = () => {
-    dispatch(fetchVideoList(category));
-    navigate(`/`);
+    startTransition(() => {
+      navigate(`/`);
+      dispatch(fetchVideoList(category));
+    });
   }
   return (
     <div>

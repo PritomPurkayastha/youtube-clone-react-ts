@@ -19,8 +19,8 @@ const HomeVideos = () => {
 
   return (
     <div className="grid gap-4 p-4" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}>
-      {videoList.map((video: YouTubeVideo) => (
-        <VideoCard video={video} key={video.id}/>
+      {videoList.map((video: YouTubeVideo, index: any) => (
+        <VideoCard video={video} key={video.id} isPriority={index === 0}/>
       ))}
     </div>
   );

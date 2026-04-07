@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useTransition } from 'react';
 import { YouTubeVideo } from '../../store/slices/videoSlice';
 import avatar from "../../assets/avatar-default-symbolic-svgrepo-com.svg";
 import { Dot, Verified } from 'lucide-react';
@@ -10,16 +10,20 @@ import { resetComments } from '../../store/slices/commentSlice';
 
 type VideoCardType = {
   video: YouTubeVideo;
+  isPriority?: boolean;
 }
 
-const VideoCard = ({video}: VideoCardType) => {
+const VideoCard = ({video, isPriority = false}: VideoCardType) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const [_, startTransition] = useTransition();
 
   const handleVideoPlay = () => {
-    navigate(`/watch?v=${video.id}`);
-    sessionStorage.setItem('video', JSON.stringify(video));
-    dispatch(resetComments());
+    startTransition(() => {
+      navigate(`/watch?v=${video.id}`);
+      sessionStorage.setItem('video', JSON.stringify(video));
+      dispatch(resetComments());
+    });
   }
 
   const viewChannel = (event: React.MouseEvent<HTMLSpanElement>) => {
@@ -29,7 +33,12 @@ const VideoCard = ({video}: VideoCardType) => {
 
   return (
     <div className="shadow-sm h-[max-content] w-[100%] flex flex-col cursor-pointer" onClick={handleVideoPlay}>
-      <img src={video.snippet.thumbnails.medium.url} className='rounded-md' />
+      <img
+        src={video.snippet.thumbnails.medium.url}
+        className='rounded-md w-full aspect-video object-cover' // <-- Add these classes
+        fetchPriority={isPriority ? 'high' : 'auto'}
+        loading={isPriority ? 'eager' : 'lazy'}
+      />
       <div className='flex items-start justify-start py-2'>
         <img src={avatar} className='rounded-full h-8 bg-gray-500 bg-opacity-50 p-1' onClick={viewChannel}/>
         <div className='flex flex-col items-start justify-start px-2 h-[max-content]'>
