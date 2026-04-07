@@ -37,7 +37,7 @@ const Comments = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   useHandleClickOutside(emojiPickerRef, () => setshowEmojiPicker(false), emojiButtonRef);
   useHandleClickOutside(dropdownRef, () => setShowSortOptions(false));
-  useGetCurrentVideoData();
+  // useGetCurrentVideoData();
 
   useEffect(() => {
     if (textareaRef.current) {
