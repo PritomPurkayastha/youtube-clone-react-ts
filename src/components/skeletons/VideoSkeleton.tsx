@@ -4,7 +4,7 @@ const VideoSkeleton = () => {
   return (
     <div className="w-full">
       {/* Thumbnail */}
-      <Skeleton className="w-full h-40 mb-3 rounded-xl" />
+      <Skeleton className="w-full h-56 md:h-48 mb-3 rounded-xl" />
 
       <div className="flex gap-3">
         {/* Channel avatar */}
@@ -12,13 +12,13 @@ const VideoSkeleton = () => {
 
         <div className="flex flex-col w-full gap-2">
           {/* Title line */}
-          <Skeleton className="h-4 w-3/4" />
+          <Skeleton className="h-8 w-3/4" />
 
           {/* Second line */}
-          <Skeleton className="h-4 w-1/2" />
+          <Skeleton className="h-8 w-1/2" />
 
           {/* Small line */}
-          <Skeleton className="h-3 w-1/4" />
+          <Skeleton className="h-5 w-1/4" />
         </div>
       </div>
     </div>
